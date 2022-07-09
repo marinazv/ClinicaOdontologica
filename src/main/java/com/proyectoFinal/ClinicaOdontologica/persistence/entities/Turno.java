@@ -4,6 +4,7 @@ import com.proyectoFinal.ClinicaOdontologica.persistence.entities.Odontologo;
 import com.proyectoFinal.ClinicaOdontologica.persistence.entities.Paciente;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -14,7 +15,7 @@ public class Turno {
     @SequenceGenerator(name = "turno_sequence", sequenceName = "turno_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "turno_sequence")
     private Long id;
-    private Date fecha; //creo que no se pedida esto busacar consigna
+    private LocalDate fecha; //creo que no se pedida esto busacar consigna
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "paciente_id", nullable = false)
@@ -34,11 +35,11 @@ public class Turno {
         return id;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

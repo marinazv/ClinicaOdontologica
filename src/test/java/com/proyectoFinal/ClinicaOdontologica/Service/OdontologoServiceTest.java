@@ -7,9 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-
 import java.util.Set;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 @SpringBootTest
 class OdontologoServiceTest {

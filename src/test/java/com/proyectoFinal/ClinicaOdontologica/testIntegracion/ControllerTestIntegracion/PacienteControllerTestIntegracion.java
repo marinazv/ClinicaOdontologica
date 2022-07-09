@@ -1,4 +1,4 @@
-package com.proyectoFinal.ClinicaOdontologica.testIntegracion.ControllerTestIntegracion;
+/*package com.proyectoFinal.ClinicaOdontologica.testIntegracion.ControllerTestIntegracion;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @AutoConfigureMockMvc(addFilters = false)
 public class PacienteControllerTestIntegracion{
 
-        @Autowired
+       @Autowired
         MockMvc mcv;
 
         @Test
@@ -31,3 +31,4 @@ public class PacienteControllerTestIntegracion{
         }
 
 }
+*/

@@ -3,12 +3,13 @@ package com.proyectoFinal.ClinicaOdontologica.model;
 import com.proyectoFinal.ClinicaOdontologica.persistence.entities.Odontologo;
 import com.proyectoFinal.ClinicaOdontologica.persistence.entities.Paciente;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class TurnoDTO {
 
     private Long id;
-    private Date fecha;
+    private LocalDate fecha;
     private Paciente paciente;
     private Odontologo odontologo;
 
@@ -20,11 +21,11 @@ public class TurnoDTO {
         this.id = id;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
