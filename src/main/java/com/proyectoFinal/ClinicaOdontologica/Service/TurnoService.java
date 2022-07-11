@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -29,16 +30,23 @@ public class TurnoService implements ITurnoService{
 
     @Override
     public void guardarTurno(TurnoDTO turnoDTO)  {
-        try {
-            Turno turno = mapper.convertValue(turnoDTO, Turno.class);
-            if (turno.getFecha() != turnoDTO.getFecha()) {
+        Set<TurnoDTO> listaTurnos = listarTodosLosTurnos();
+        boolean existeTurno = false;
+           for (TurnoDTO t : listaTurnos) {
+                if (t.getFecha() == turnoDTO.getFecha()) {
+                    existeTurno = true;
+                }
+            }
+           try{
+            if (!existeTurno && (turnoDTO.getFecha().isAfter(LocalDate.now()))){
+                Turno turno = mapper.convertValue(turnoDTO, Turno.class);
                 turnoRepository.save(turno);
             }
-        } catch (Exception e){
-            logger.error("Ya existe un turno en esa fecha");
-        }
-
+        }catch (Exception e){
+               logger.error("No es posible cargar el turno en esa fecha");
+           }
     }
+
 
     @Override
     public Set<TurnoDTO> listarTodosLosTurnos() {
