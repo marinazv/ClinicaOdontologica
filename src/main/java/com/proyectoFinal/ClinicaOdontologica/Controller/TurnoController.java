@@ -1,5 +1,6 @@
 package com.proyectoFinal.ClinicaOdontologica.Controller;
 
+import com.proyectoFinal.ClinicaOdontologica.Exceptions.ResourceNotFoundExceptions;
 import com.proyectoFinal.ClinicaOdontologica.Service.ITurnoService;
 import com.proyectoFinal.ClinicaOdontologica.Service.TurnoService;
 import com.proyectoFinal.ClinicaOdontologica.model.TurnoDTO;
@@ -32,7 +33,7 @@ public class TurnoController {
     }
 
     @GetMapping("{id}")
-    public TurnoDTO mostrarTurnoPorId(@PathVariable Long id){
+    public TurnoDTO mostrarTurnoPorId(@PathVariable Long id) throws ResourceNotFoundExceptions{
             return turnoService.buscarTurnoPorId(id);
     }
 
@@ -40,11 +41,17 @@ public class TurnoController {
     public ResponseEntity<?> guardarTurno(@RequestBody TurnoDTO turnoDto){
         turnoService.guardarTurno(turnoDto);
         return ResponseEntity.ok(HttpStatus.OK);
+
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> eliminarTurnoPorId(@PathVariable Long id){
-        turnoService.eliminarTurno(id);
-        return ResponseEntity.ok(HttpStatus.OK);
+    public ResponseEntity eliminarTurnoPorId(@PathVariable Long id) throws ResourceNotFoundExceptions {
+        ResponseEntity response = null;
+        if (turnoService.eliminarTurno(id)) {
+            response= ResponseEntity.ok(HttpStatus.OK);
+        }else{
+            response= ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return response;
     }
 }

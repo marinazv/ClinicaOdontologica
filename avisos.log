@@ -1,0 +1,5 @@
+[2022-07-08 23:20:56] [ERROR] [GlobalExceptionHandler:19] Request method 'GET' not supported
+[2022-07-08 23:21:56] [ERROR] [GlobalExceptionHandler:19] Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: "al"
+[2022-07-08 23:22:55] [ERROR] [GlobalExceptionHandler:19] Request method 'GET' not supported
+[2022-07-08 23:22:59] [ERROR] [GlobalExceptionHandler:19] Request method 'GET' not supported
+[2022-07-08 23:23:39] [ERROR] [GlobalExceptionHandler:19] Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: "al"

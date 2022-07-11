@@ -1,6 +1,7 @@
 package com.proyectoFinal.ClinicaOdontologica.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.proyectoFinal.ClinicaOdontologica.Exceptions.ResourceNotFoundExceptions;
 import com.proyectoFinal.ClinicaOdontologica.model.PacienteDTO;
 import com.proyectoFinal.ClinicaOdontologica.persistence.entities.Paciente;
 import com.proyectoFinal.ClinicaOdontologica.persistence.entities.Turno;
@@ -9,6 +10,7 @@ import com.proyectoFinal.ClinicaOdontologica.persistence.repository.ITurnoReposi
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +28,7 @@ public class TurnoService implements ITurnoService{
     ObjectMapper mapper;
 
     @Override
-    public void guardarTurno(TurnoDTO turnoDTO) {
+    public void guardarTurno(TurnoDTO turnoDTO)  {
         try {
             Turno turno = mapper.convertValue(turnoDTO, Turno.class);
             if (turno.getFecha() != turnoDTO.getFecha()) {
@@ -34,7 +36,7 @@ public class TurnoService implements ITurnoService{
             }
         } catch (Exception e){
             logger.error("Ya existe un turno en esa fecha");
-        };
+        }
 
     }
 
@@ -49,11 +51,15 @@ public class TurnoService implements ITurnoService{
     }
 
     @Override
-    public TurnoDTO buscarTurnoPorId(Long id) {
+    public TurnoDTO buscarTurnoPorId(Long id) throws ResourceNotFoundExceptions{
         Optional<Turno> turno = turnoRepository.findById(id);
         TurnoDTO turnoDTO= null;
-        if (turno.isPresent())
+        if (turno.isPresent()) {
             turnoDTO = mapper.convertValue(turno, TurnoDTO.class);
+        }
+        else{
+            new ResourceNotFoundExceptions("No existe un turno con el id: "+ id);
+        }
         return turnoDTO;
     }
 
@@ -63,7 +69,15 @@ public class TurnoService implements ITurnoService{
     }
 
     @Override
-    public void eliminarTurno(Long id) {
-        turnoRepository.deleteById(id);
+    public Boolean eliminarTurno(Long id) throws ResourceNotFoundExceptions{
+        boolean res= false;
+        if (buscarTurnoPorId(id)== null){
+            throw new ResourceNotFoundExceptions("No existe un turno con id:"+ id+" para eliminar");
+        }else {
+            turnoRepository.deleteById(id);
+            res = true;
+        }
+        return  res;
     }
+
 }
